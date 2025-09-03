@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase Chat</title>
+    <title>Firebase Chat App</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -13,6 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+    <!-- Auth Container -->
     <div id="auth-container" class="container">
         <div class="card">
             <div class="card__header">
@@ -49,13 +50,20 @@
         </div>
     </div>
 
+    <!-- Chat Container -->
     <div id="chat-container" class="container" style="display: none;">
         <div class="chat-card">
             <div class="chat-header">
                 <h2>Chat Room</h2>
-                <button id="logout-btn" class="btn btn--icon">
-                    <span class="material-icons">logout</span>
-                </button>
+                <div>
+                    <span id="user-email" class="user-email"></span>
+                    <button id="logout-btn" class="btn btn--icon">
+                        <span class="material-icons">logout</span>
+                    </button>
+                </div>
+            </div>
+            <div id="admin-panel" class="admin-panel" style="display: none;">
+                <button id="delete-all-messages" class="btn btn--error btn--block">Delete All Messages</button>
             </div>
             <div id="messages" class="messages"></div>
             <form id="message-form" class="message-form">

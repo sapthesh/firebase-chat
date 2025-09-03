@@ -21,9 +21,12 @@ const signupForm = document.getElementById('signup-form');
 const toggleText = document.getElementById('toggle-text');
 const toggleLink = document.getElementById('toggle-link');
 const logoutBtn = document.getElementById('logout-btn');
+const userEmailSpan = document.getElementById('user-email');
+const adminPanel = document.getElementById('admin-panel');
 const messagesDiv = document.getElementById('messages');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
+const deleteAllMessagesBtn = document.getElementById('delete-all-messages');
 
 // Toggle between login and signup
 toggleLink.addEventListener('click', (e) => {
@@ -47,9 +50,6 @@ loginForm.addEventListener('submit', (e) => {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
     auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-            // Signed in
-        })
         .catch((error) => {
             alert(error.message);
         });
@@ -61,9 +61,6 @@ signupForm.addEventListener('submit', (e) => {
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
     auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            // Signed up
-        })
         .catch((error) => {
             alert(error.message);
         });
@@ -109,14 +106,36 @@ function loadMessages() {
         });
 }
 
+// Check if user is admin
+async function isAdmin(user) {
+    await user.getIdToken(true);
+    const idTokenResult = await user.getIdTokenResult();
+    return !!idTokenResult.claims?.admin;
+}
+
+// Admin: Delete all messages
+deleteAllMessagesBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete all messages?')) {
+        db.collection('messages').get().then(snapshot => {
+            snapshot.forEach(doc => {
+                doc.ref.delete();
+            });
+        });
+    }
+});
+
 // Auth state listener
-auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged(async (user) => {
     if (user) {
         authContainer.style.display = 'none';
         chatContainer.style.display = 'block';
+        userEmailSpan.textContent = user.email;
+        const admin = await isAdmin(user);
+        adminPanel.style.display = admin ? 'block' : 'none';
         loadMessages();
     } else {
         authContainer.style.display = 'block';
         chatContainer.style.display = 'none';
+        adminPanel.style.display = 'none';
     }
 });

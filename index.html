@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="auth-container" class="container">
+        <div class="card">
+            <div class="card__header">
+                <h1 class="card__title">Welcome</h1>
+                <p class="card__subtitle">Sign in to continue</p>
+            </div>
+            <div class="card__body">
+                <form id="login-form" class="form">
+                    <div class="input-group">
+                        <span class="material-icons input-icon">mail</span>
+                        <input type="email" id="login-email" class="input-field" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="material-icons input-icon">lock</span>
+                        <input type="password" id="login-password" class="input-field" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--block">Sign In</button>
+                </form>
+                <form id="signup-form" class="form" style="display: none;">
+                    <div class="input-group">
+                        <span class="material-icons input-icon">mail</span>
+                        <input type="email" id="signup-email" class="input-field" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="material-icons input-icon">lock</span>
+                        <input type="password" id="signup-password" class="input-field" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--block">Sign Up</button>
+                </form>
+            </div>
+            <div class="card__footer">
+                <p id="toggle-text">Don't have an account? <a id="toggle-link" href="#">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-container" class="container" style="display: none;">
+        <div class="chat-card">
+            <div class="chat-header">
+                <h2>Chat Room</h2>
+                <button id="logout-btn" class="btn btn--icon">
+                    <span class="material-icons">logout</span>
+                </button>
+            </div>
+            <div id="messages" class="messages"></div>
+            <form id="message-form" class="message-form">
+                <input type="text" id="message-input" class="message-input" placeholder="Type a message..." required>
+                <button type="submit" class="btn btn--primary btn--icon">
+                    <span class="material-icons">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
